@@ -30,6 +30,24 @@ footer {
     width: 100%;
 }
 
+div.menu {
+    border: 7px solid #00880080;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0 auto;
+
+}
+
+h1 {
+    text-align: center;
+}
+
+div.menu:hover {
+    background-color: #ffffff30;
+    box-shadow: #00000030;
+
+}
+
 a {
     text-decoration: none;
     color: blue;
