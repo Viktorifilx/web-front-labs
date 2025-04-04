@@ -16,18 +16,20 @@ header {
 main {
     background-color: white; 
     padding: 20px;
-    margin: 20px;
+    margin: 10px 20px 45px;
     border-radius: 10px;
 }
 
 footer {
     background-color: darkblue; 
     color: white;
-    text-align: center;
+    text-align: right;
     padding: 10px;
-    position: relative;
+    position: fixed;
     bottom: 0;
-    width: 100%;
+    right: 0;
+    left: 0;
+    font-size: 16pt;
 }
 
 div.menu {
