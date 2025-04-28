@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Филатова Виктория Михайловна. Лабораторная 5</title>
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon-16x16.png" />
+    <link rel="icon" href="favicon-32x32.png" />
+    <style>
+        .cart-container {
+            width: 350px;
+            background-color: #b3e5fc;
+            border: 2px solid #0288d1;
+            border-radius: 12px;
+            margin: 30px auto;
+            padding: 22px 28px;
+            color: #222;
+        }
+        .cart-title {
+            color: #b71c1c;
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cart-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .cart-input {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 5px 0;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #90caf9;
+            text-align: left;
+        }
+        .message {
+            width: 130px;
+            height: 36px;
+            background-color: #e1f5fe;
+            border: 2px solid #0288d1;
+            border-radius: 7px;
+            cursor: pointer;
+            display: inline-block;
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 15px;
+            color: #01579b;
+            text-align: center;
+        }
+        .cart-price-output {
+            margin-top: 18px;
+            font-size: 1.15em;
+            color: #1565c0;
+        }
+    </style>
+    <script>
+        function calcTotal() {
+            let price1 = 100; // Яблоки
+            let price2 = 80;  // Груши
+            let price3 = 150; // Апельсины
+            let price4 = 300; // Дыни
+            let price5 = 60;  // Бананы
+
+            let qty1 = parseInt(document.getElementById('item1').value) || 0;
+            let qty2 = parseInt(document.getElementById('item2').value) || 0;
+            let qty3 = parseInt(document.getElementById('item3').value) || 0;
+            let qty4 = parseInt(document.getElementById('item4').value) || 0;
+            let qty5 = parseInt(document.getElementById('item5').value) || 0;
+
+            let total = qty1 * price1 + qty2 * price2 + qty3 * price3 + qty4 * price4 + qty5 * price5;
+
+            document.getElementById('result').innerHTML = 'Общая цена: ' + total + ' р';
+        }
+
+        function clearCart() {
+            document.getElementById('item1').value = '';
+            document.getElementById('item2').value = '';
+            document.getElementById('item3').value = '';
+            document.getElementById('item4').value = '';
+            document.getElementById('item5').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function showAuthor() {
+            alert('Автор страницы: \nФилатова Виктория Михайловна');
+        }
+        function showGreeting() {
+            alert('Приветствую вас на моей странице корзины!\nУчимся работать с формами и расчетами :)');
+        }
+    </script>
+</head>
+<body>
+    <header onclick="showAuthor()">НГТУ, ФБ, Лабораторная 5</header>
+
+    <main>
+        <div class="cart-container">
+            <div class="cart-title">Корзина товаров</div>
+            <label class="cart-label">Яблоки (100р/шт):
+                <input class="cart-input" id="item1" type="number" placeholder="Введите количество яблок" min="0"/>
+            </label>
+            <label class="cart-label">Груши (80р/шт):
+                <input class="cart-input" id="item2" type="number" placeholder="Введите количество груш" min="0"/>
+            </label>
+            <label class="cart-label">Апельсины (150р/шт):
+                <input class="cart-input" id="item3" type="number" placeholder="Введите количество апельсинов" min="0"/>
+            </label>
+            <label class="cart-label">Дыни (300р/шт):
+                <input class="cart-input" id="item4" type="number" placeholder="Введите количество дынь" min="0"/>
+            </label>
+            <label class="cart-label">Бананы (60р/шт):
+                <input class="cart-input" id="item5" type="number" placeholder="Введите количество бананов" min="0"/>
+            </label>
+            <div class="message" onclick="calcTotal()">Рассчитать</div>
+            <div class="message" onclick="clearCart()">Очистить</div>
+            <div class="cart-price-output" id="result"></div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+    </footer>
+
+</body>
+</html>
