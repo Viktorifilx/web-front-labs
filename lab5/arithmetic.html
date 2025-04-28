@@ -62,6 +62,32 @@
             alert( a + ' / ' + b + ' = ' + result);
         }
 
+        function showDegree() {
+            let inputA = document.getElementById('numberA');
+            let inputB = document.getElementById('numberB');
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+            
+            if (isNaN(a) || isNaN(b)) {
+                alert('Пожалуйста, введите числовые значения в оба поля.');
+                inputA.style.borderColor = 'red';
+                inputB.style.borderColor = 'red';
+                return;
+            }
+
+            if (a === 0 && b === 0) {
+                alert('Ошибка: оба числа равны нулю.');
+                inputA.style.color = 'red';
+                inputB.style.color = 'red';
+                inputA.style.borderColor = 'red';
+                inputB.style.borderColor = 'red';
+                return;
+            }
+
+            let result = a ** b;
+            alert('Число ' + a + ' в степени ' + b + ' равно ' + result);
+        }
+
         function showAuthor() {
             let author = 'Автор страницы: \nФилатова Виктория Михайловна'
             alert(author)
@@ -102,6 +128,7 @@
         <div class="message" onclick="showDifference()">Найти разность чисел</div>
         <div class="message" onclick="showProduct()">Найти произведение</div>
         <div class="message" onclick="showDiv()">Найти отношение чисел</div>
+        <div class="message" onclick="showDegree()">Возвести число в степень</div>
         <div class="message"onclick="showAuthor()"> Узнать, кто автор страницы?</div>
     </main>
 
