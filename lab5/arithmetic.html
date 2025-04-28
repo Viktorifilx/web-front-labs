@@ -10,30 +10,56 @@
     <link rel="icon" href="favicon-32x32.png">
     <script>
         function showSum() {
-            let inputA = document.getElementById('numberA')
-            let inputB = document.getElementById('numberB')
-            let a = parseInt(inputA.value)
-            let b = parseInt(inputB.value)
-            let result = a + b
-            alert (' Сумма '+ a +' и '+ b +' равна ' +  result)
+            let inputA = document.getElementById('numberA');
+            let inputB = document.getElementById('numberB');
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+            let result = a + b;
+            alert (' Сумма '+ a +' и '+ b +' равна ' +  result);
         }
 
         function showDifference() {
-            let inputA = document.getElementById('numberA')
-            let inputB = document.getElementById('numberB')
-            let a = parseInt(inputA.value)
-            let b = parseInt(inputB.value)
-            let result = a - b
-            alert('Разность ' + a + ' и ' + b + ' равна ' + result)
+            let inputA = document.getElementById('numberA');
+            let inputB = document.getElementById('numberB');
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+            let result = a - b;
+            alert('Разность ' + a + ' и ' + b + ' равна ' + result);
         }
 
         function showProduct() {
-            let inputA = document.getElementById('numberA')
-            let inputB = document.getElementById('numberB')
-            let a = parseInt(inputA.value)
-            let b = parseInt(inputB.value)
-            let result = a * b
-            alert('Произведение ' + a + ' и ' + b + ' равно ' + result)
+            let inputA = document.getElementById('numberA');
+            let inputB = document.getElementById('numberB');
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+            let result = a * b;
+            alert('Произведение ' + a + ' и ' + b + ' равно ' + result);
+        }
+
+        function showDiv(){
+            let inputA = document.getElementById('numberA');
+            let inputB = document.getElementById('numberB');
+            let a = parseInt(inputA.value);
+            let b = parseInt(inputB.value);
+            if (b==0) {
+                alert('На ноль делить нельзя!');
+                inputB.focus();
+                inputB.style.color = 'red';
+                inputB.style.borderColor = 'red';
+                return;
+            }
+
+            if(isNaN(a)) {
+                alert('Введите числовое значение в первое поле');
+                inputA.style.borderColor = 'red';
+                inputB.style.borderColor = 'red';
+                return;
+            }
+
+            inputB.style.color = '';
+            inputB.style.borderColor = '';
+            let result = a/b;
+            alert( a + ' / ' + b + ' = ' + result);
         }
 
         function showAuthor() {
@@ -75,6 +101,7 @@
         <div class="message" onclick="showSum()">Найти сумму чисел</div>
         <div class="message" onclick="showDifference()">Найти разность чисел</div>
         <div class="message" onclick="showProduct()">Найти произведение</div>
+        <div class="message" onclick="showDiv()">Найти отношение чисел</div>
         <div class="message"onclick="showAuthor()"> Узнать, кто автор страницы?</div>
     </main>
 
