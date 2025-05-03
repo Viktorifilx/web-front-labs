@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Филатова Виктория Михайловна. Лабораторная 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-16x16.png">
+    <link rel="icon" href="favicon-32x32.png">
+
+    <style>
+        #diag {
+          display: flex;
+          align-items: flex-end;
+          height: 500px;
+          margin: 20px;
+          background-color: #f0f0f0;
+          position: relative;
+          padding: 20px;
+          border: 4px solid #a5cadd;
+        }
+
+        .bar {
+            width: 250px;
+            height: 50px;
+            margin: 0 7px;
+            background-color: #c98bd8;
+            border: 2px solid #340e46;
+            height: 80px;
+            box-sizing: border-box;
+            margin-bottom: 7px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .bar-label {
+            position: absolute;
+            top: 0; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 14px; 
+            font-weight: bold;
+            color: #000; 
+        }
+    </style>
+    <script>
+        function showDiagram() {
+            let data = [36, 86, 55, 28, 92, 60, 41, 17, 9, 43];
+            let colors = ['#C71585','#FF69B4','#9932CC','#DA70D6','#FFDAB9','#DB7093','#F08080','#800080','#9932CC','#EE82EE']
+            let bars = document.getElementsByClassName('bar');
+            const diagHeight = document.getElementById('diag').clientHeight - 40; 
+            const maxData = Math.max(...data);
+            const k = diagHeight / maxData;
+            for (let i = 0; i < data.length; i++) {
+                bars[i].style.height = (k * data[i]) + 'px';
+                bars[i].style.backgroundColor = colors[i];
+                
+                let label = document.createElement('span');
+                label.className = 'bar-label';
+                label.innerText = Math.round(data[i]);
+                bars[i].appendChild(label);
+            }
+        }
+    </script>
+</head>
+<body onload="showDiagram()">
+    <header>
+        НГТУ, ФБ, Лабораторная работа 6
+    </header>
+
+    <main>
+        <div id="diag">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+    </footer>
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
