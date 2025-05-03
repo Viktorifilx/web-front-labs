@@ -37,16 +37,44 @@
         
     </style>
     <script>
-        function showMutipleTable() {
-            let tbl = document.getElementById('mtable');
-            tbl.innerHTML = '<h1>Таблица умножения</h1>';
-            for (i = 1; i <=10; i++) {
-                let s = `<div>${i}* 7 = ${i*7}</div>`;
-                tbl.innerHTML += s;
+
+        function showTable(){
+            const tbl = document.getElementById('mtable');
+            const errorDiv = document.getElementById('errorMsg');
+
+            const multiplyInput = document.getElementById('multiplier');
+            const startInput = document.getElementById('start');
+            const endInput = document.getElementById('end');
+
+            const multiplyBy = parseInt(multiplyInput.value);
+            const start = parseInt(startInput.value);
+            const end = parseInt(endInput.value);
+
+            if (multiplyInput.value.trim() === '' || startInput.value.trim() === '' || endInput.value.trim() === '') {
+                errorDiv.textContent = "Пожалуйста, заполните все поля.";
+                return;
             }
 
+            if (isNaN(multiplyBy) || isNaN(start) || isNaN(end)) {
+                errorDiv.textContent = "Пожалуйста, введите корректные числа.";
+                return;
+            }
+
+            if (start > end) {
+                errorDiv.textContent = "Начальное значение не может быть больше конечного.";
+                return;
+            }
+
+            errorDiv.textContent = '';
+
+            tbl.innerHTML = '<h1>Таблица умножения</h1>';
+
+            for (let i = start; i <= end; i++) {
+                let s = `<div>${i}* ${multiplyBy} = ${i*multiplyBy}</div>`;
+                tbl.innerHTML += s;
+            }
         }
-        showMutipleTable();
+
     </script>
 </head>
 <body onload = 'showMutipleTable()'>
@@ -56,6 +84,16 @@
 
     <main>
         <div id="mtable"></div>
+        <div class="controls">
+        Умножить на: <input type = 'number' id="multiplier" placeholder="Введите число"><br>
+        Начать с: <input type = 'number' id="start" placeholder="Введите число"><br>
+        Закончить на: <input type = 'number' id="end" placeholder="Введите число"><br>
+
+        <button onclick="showTable()">Таблица</button>
+
+        <div id="errorMsg" style="color: red; font-weight: bold; margin-top:10px;"></div>
+
+        </div>
     </main>
 
     <footer>
