@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Филатова Виктория Михайловна. Лабораторная 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-16x16.png">
+    <link rel="icon" href="favicon-32x32.png">
+    <style>
+        #bookList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        }
+        .book {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            width: 280px;
+            background-color: #fff;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s, background-color 0.3s;
+        }
+        .book.bestseller {
+            border-color: #e67e22;
+            box-shadow: 0 0 10px #f39c12;
+        }
+        .book.unavailable {
+            opacity: 0.4;
+            background-color: #e0e0e0;
+        }
+        .title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+        .author {
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        .year {
+            margin-bottom: 8px;
+        }
+        .price {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .bestseller-label {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #e67e22;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .not-available {
+            color: #a0522d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+    </head>
+    <body>
+    <header>
+        НГТУ, ФБ, Лабораторная работа 6
+    </header>
+    
+    <h1>Список книг</h1>
+    <div id="bookList"></div>
+    
+    <script src="books.js"></script>
+    <script>
+    function showBooks() {
+        const container = document.getElementById('bookList');
+        for (let i=0; i<books.length; i++) {
+            const book = books[i];
+            const div = document.createElement('div');
+            div.className = 'book';
+            if (!book.inStock) div.classList.add('unavailable');
+            if (book.bestseller) div.classList.add('bestseller');
+    
+            let html = `
+                <div class="title">${book.name}</div>
+                <div class="author">Автор: ${book.author}</div>
+                <div class="year">Год: ${book.publicationYear}</div>
+                <div class="price">Цена: ${book.price} руб.</div>`;
+            if (book.bestseller) {
+                html += `<div class="bestseller-label">Бестселлер</div>`;
+            }
+            if (!book.inStock) {
+                html += `<div class="not-available">Этой книги сейчас нет в наличии</div>`;
+            }
+            div.innerHTML = html;
+            container.appendChild(div);
+        }
+    }
+    window.onload = showBooks;
+    </script>
+    
+    <footer>
+        &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>
