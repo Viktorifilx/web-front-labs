@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Филатова Виктория Михайловна. Лабораторные работы по WEB
+            программированию</title>
+        <link rel="stylesheet" href="../main.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon-16x16.png">
+        <link rel="icon" href="favicon-32x32.png">
+        <script>
+            function getEuroExchangeRate() {
+                const url = 'https://www.cbr-xml-daily.ru/daily_json.js';
+                fetch(url)
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(json){
+                        const current = json.Valute.EUR.Value;
+                        const previous = json.Valute.EUR.Previous;
+                        const date = json.Date.substring(0, 10);
+                        const diff = (current - previous).toFixed(4);
+                        let trend = '';
+
+                        if (diff > 0) trend = 'Курс поднялся';
+                        else if (diff < 0) trend = 'Курс опустился';
+                        else trend = 'Курс не изменился';
+
+                        const resultBlock = document.getElementById('euro-result');
+                        resultBlock.innerHTML = `
+                            <h3>Информация о курсе евро</h3>
+                            <p><strong>Дата запроса:</strong> ${date}</p>
+                            <p><strong>Курс сегодня:</strong> ${current.toFixed(4)} ₽</p>
+                            <p><strong>Курс вчера:</strong> ${previous.toFixed(4)} ₽</p>
+                            <p><strong>Разница:</strong> ${diff} ₽</p>
+                            <p><em>${trend}</em></p>
+                            <p><a href="https://www.cbr-xml-daily.ru/" target="_blank">Источник: cbr-xml-daily.ru</a></p>
+                        `;
+
+                        document.querySelector('button').remove(); 
+                    });
+            }
+        </script>
+
+    </head>
+
+    <body>
+
+        <header>
+            НГТУ, ФБ, Лабораторная работа 7
+        </header>
+
+        <main>
+            <button onclick="getEuroExchangeRate()">Получить курс евро</button>
+            <div id="euro-result" style="padding: 20px; margin-top: 20px; border: 2px solid #444; border-radius: 10px; background-color: #f9f9f9;"></div>
+        </main>
+
+        </main>
+
+        <footer>
+            &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+        </footer>
+        
+    </body>
+</html>
+
