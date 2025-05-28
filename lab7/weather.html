@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Филатова Виктория Михайловна. Лабораторные работы по WEB
+            программированию</title>
+        <link rel="stylesheet" href="../main.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon-16x16.png">
+        <link rel="icon" href="favicon-32x32.png">
+
+        <script>
+        function getWeather() {
+            const url = 'https://api.open-meteo.com/v1/forecast?latitude=55.0415&longitude=82.9346&hourly=temperature_2m&timezone=Asia%2FBangkok';
+        
+            fetch(url)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    const time = json.hourly.time;
+                    const temp = json.hourly.temperature_2m;
+
+                    const t8 = time.findIndex(function(t) {
+                        return t.includes("T08:00");
+                    });
+
+                    const t12 = time.findIndex(function(t) {
+                        return t.includes("T12:00");
+                    });
+
+                    const t20 = time.findIndex(function(t) {
+                        return t.includes("T20:00");
+                    });
+
+                    const result = document.getElementById('weather-result');
+                    result.innerHTML = `
+                        <h3>Температура в Новосибирске</h3>
+                        <p><strong>В 8:00:</strong> ${temp[t8]}°C</p>
+                        <p><strong>В 12:00:</strong> ${temp[t12]}°C</p>
+                        <p><strong>В 20:00:</strong> ${temp[t20]}°C</p>
+                        <p><a href="https://open-meteo.com/" target="_blank">Источник: open-meteo.com</a></p>
+                    `;
+
+                    document.querySelector('button').remove();
+                });
+        }
+    </script>
+    </head>
+
+    <body>
+
+        <header>
+            НГТУ, ФБ, Лабораторная работа 7
+        </header>
+
+        <main>
+            <button onclick="getWeather()">Показать температуру</button>
+            <div id="weather-result" style="margin-top: 20px; padding: 15px; border: 1px solid #444; background-color: #eef; border-radius: 10px;"></div>
+        </main>
+
+        <footer>
+            &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+        </footer>
+        
+    </body>
+</html>
