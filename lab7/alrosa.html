@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Котировки акций компании АЛРОСА</title>
+        <link rel="stylesheet" href="../main.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon-16x16.png">
+        <link rel="icon" href="favicon-32x32.png">
+        <script src="alrosa-data.js"></script>
+        <script>
+            function showStock() {
+                const table = document.getElementById('stock-table');
+
+                for (let i = 0; i < prices.length; i++) {
+                    const tr = document.createElement('tr');
+
+                    const tdDate = document.createElement('td');
+                    tdDate.textContent = dates[i];
+
+                    const tdPrice = document.createElement('td');
+                    tdPrice.textContent = prices[i].toFixed(2);
+
+                    const tdDiff = document.createElement('td');
+                    if (i === 0) {
+                        tdDiff.textContent = '–';
+                    } else {
+                        const diff = (prices[i] - prices[i - 1]).toFixed(2);
+                        tdDiff.textContent = diff;
+                        tdDiff.style.color =
+                            diff > 0 ? 'green' :
+                            diff < 0 ? 'red' : 'black';
+                    }
+
+                    tr.appendChild(tdDate);
+                    tr.appendChild(tdPrice);
+                    tr.appendChild(tdDiff);
+                    table.appendChild(tr);
+                }
+
+                const avg = (prices.reduce((sum, val) => sum + val, 0) / prices.length).toFixed(2);
+                const max = Math.max(...prices).toFixed(2);
+                const min = Math.min(...prices).toFixed(2);
+
+                document.getElementById('stats').innerHTML =
+                    `<p>Средняя цена: ${avg}</p>
+                    <p>Максимум: ${max}</p>
+                    <p>Минимум: ${min}</p>`;
+
+                document.querySelector('button').remove();
+            }
+        </script>
+    </head>
+
+    <body>
+
+        <header>НГТУ, ФБ, Лабораторная работа 7</header>
+
+        <main>
+            <button onclick="showStock()">Курс акций АЛРОСА</button>
+
+            <table id="stock-table" border="1">
+                <tr>
+                    <th>Дата</th>
+                    <th>Цена акций</th>
+                    <th>Разница</th>
+                </tr>
+            </table>
+
+            <div id="stats"></div>
+        </main>
+
+        <footer>&copy; Филатова Виктория, ФБИ-34, 2025</footer>
+
+</body>
+</html>
