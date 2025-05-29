@@ -24,9 +24,12 @@
             <div id="app">
                 <h1 :title='messageRus'>{{message}}</h1>
                 <p>Счётчик: {{ counter }}</p>
-                <button @click="incCounter" v-if="counter < 10">++</button>
-                <button @click="decCounter" v-if="counter > 0">--</button>
-                <hr>
+                <button @click="incCounter" v-if="counter < 10" class="btn btn-success btn-sm me-2">
+                <i class="bi bi-plus-circle"></i>
+                </button>
+                <button @click="decCounter" v-if="counter > 0" class="btn btn-danger btn-sm">
+                <i class="bi bi-dash-circle"></i>
+                </button>
 
                 <h2>Пользователь:</h2>
                 <div>Имя: {{ user.name }}</div>
@@ -34,17 +37,44 @@
                 <div>Телефон: {{ user.tel }}</div>
                 <hr>
 
-        <div class="card" style="max-width: 400px;">
+        <div class="card my-4" style="max-width: 400px;">
             <div class="card-body">
                 <h2 class="card-title">Цветы</h2>
                 <ul style="padding-left: 20px; margin-bottom: 0;">
-                    <li v-for="(flower, id) in flowers">
-                        {{ flower }} <button @click="edit(index, flower)">?</button>
-                    </li>
+                <li v-for="(flower, index) in flowers">
+                <span v-if="flower.name === null">загружается...</span>
+                <span v-else>{{ flower.name }}</span>
+
+                <button
+                    class="btn btn-outline-primary btn-sm ms-2"
+                    @click="edit(index, flower)"
+                    v-if="flower.name !== null"
+                >
+                    <i class="bi bi-pencil"></i>
+                </button>
+
+                <button
+                    class="btn btn-outline-danger btn-sm ms-1"
+                    @click="removeFlower(index)"
+                    v-if="flower.name !== null"
+                >
+                    <i class="bi bi-trash"></i>
+                </button>
+
+                <div
+                    class="spinner-border spinner-border-sm text-primary ms-2"
+                    role="status"
+                    v-if="flower.name === null"
+                ></div>
+                </li>
                 </ul>
+
+                <button @click="addFlower" class="btn btn-success btn-sm mt-3">
+                <i class="bi bi-plus-circle"></i> Добавить цветок
+                </button>
+                
             </div>
         </div>
-        <hr>
 
                 <h2>Цветы</h2>
                 <table class="table table-bordered table-hover table-sm table-info">
@@ -70,23 +100,22 @@
                 <hr>
 
                 <h2>Калькулятор</h2>
-                <div class = 'row g-5'>
-                    <div class = 'col-auto'>
-                        <input type="number" v-model="a" class="form-control">
-                    </div>
-                    <div class = 'col-auto'>
-                        +
-                    </div>
-                    <div class = 'col-auto'>
-                        <input type="number" v-model="b" class="form-control">
-                    </div>
-                    <div class = 'col-auto'>
-                        <button @click="sum" class = 'btn btn-primary'>=</button>
-                    </div>
-                    <div class = 'col-auto'>
-                        <span class = "badge text-bg-primary fs-5">{{ result }}</span>
-                        <span>{{ result }}</span>
-                    </div>
+                <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <input type="number" v-model="a" class="form-control">
+                </div>
+                <div class="col-auto">+</div>
+                <div class="col-auto">
+                    <input type="number" v-model="b" class="form-control">
+                </div>
+                <div class="col-auto">
+                    <button @click="sum" class="btn btn-success">
+                    <i class="bi bi-equals"></i>
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <span class="badge text-bg-success fs-5">{{ result }}</span>
+                </div>
                 </div>
         </main>
 
@@ -124,6 +153,15 @@
                     },
                     decCounter() {
                         this.counter--;
+                    },
+                    removeFlower(index) {
+                    this.flowers.splice(index, 1);
+                    },
+                    addFlower() {
+                    const newName = prompt('Введите название нового цветка:');
+                    if (newName !== null && newName.trim() !== '') {
+                        this.flowers.push({ name: newName });
+                    }
                     },
                     edit(index, oldName) {
                     const newName = prompt('Новое имя цветка:', oldName.name);
