@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Филатова Виктория Михайловна. Лабораторные работы по WEB
+            программированию</title>
+        <link rel="stylesheet" href="../main.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon-16x16.png">
+        <link rel="icon" href="favicon-32x32.png">
+
+        <style>
+            .chart {
+                display: flex;
+                align-items: flex-end;
+                gap: 5px;
+                margin-top: 20px;
+            }
+            .bar {
+                width: 30px;
+                background-color: #4a90e2;
+                text-align: center;
+                color: white;
+                font-size: 12px;
+                border-radius: 5px 5px 0 0;
+            }
+            .bar-humidity {
+                background-color: #90caf9;
+            }
+            .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            }
+
+            .label {
+                font-size: 11px;
+                color: #222;
+            }
+
+            #weather-result {
+                margin-top: 20px;
+                padding: 15px;
+                border: 1px solid #444;
+                background-color: #eef;
+                border-radius: 10px;
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            h3 {
+                margin-bottom: 10px;
+            }
+
+        </style>
+
+        <script>
+            function showAdvancedWeather() {
+                const url = 'https://api.open-meteo.com/v1/forecast?latitude=55.0415&longitude=82.9346&hourly=temperature_2m,relative_humidity_2m&timezone=Asia%2FBangkok';
+
+                fetch(url)
+                    .then(function(response) {
+                        return response.json();
+                    })
+                    .then(function(json) {
+                        const time = json.hourly.time;
+                        const temp = json.hourly.temperature_2m;
+                        const hum = json.hourly.relative_humidity_2m;
+
+                        const chart = document.getElementById('chart');
+                        chart.innerHTML = '<h3>Прогноз температуры и влажности</h3>';
+
+                        for (let i = 0; i < 24; i += 3) {
+                            const tempVal = temp[i];
+                            const humVal = hum[i];
+                            const hour = time[i].split('T')[1].substring(0, 5);
+
+                            const barTemp = document.createElement('div');
+                            barTemp.className = 'bar';
+                            barTemp.style.height = (tempVal * 2) + 'px';
+                            barTemp.title = `${tempVal}°C`;
+
+                            const barHum = document.createElement('div');
+                            barHum.className = 'bar bar-humidity';
+                            barHum.style.height = (humVal * 1.2) + 'px';
+                            barHum.title = `${humVal}%`;
+
+                            const label = document.createElement('div');
+                            label.className = 'label';
+                            label.textContent = hour;
+
+                            const group = document.createElement('div');
+                            group.className = 'bar-group';
+                            group.appendChild(label);
+                            group.appendChild(barTemp);
+                            group.appendChild(barHum);
+
+                            chart.appendChild(group);
+                        }
+
+                        const nowTemp = temp[0];
+                        const nowHum = hum[0];
+
+                        document.getElementById('current').innerHTML = `
+                            <p><strong>Сейчас:</strong></p>
+                            <p>Температура: ${nowTemp}°C</p>
+                            <p>Влажность: ${nowHum}%</p>
+                            <p><a href="https://open-meteo.com/" target="_blank">Источник: open-meteo.com</a></p>
+                        `;
+
+                        document.querySelector('button').remove();
+                    });
+            }
+        </script>
+        
+    </head>
+
+    <body>
+
+        <header>
+            НГТУ, ФБ, Лабораторная работа 7
+        </header>
+
+        <main>
+            <button onclick="showAdvancedWeather()">Показать прогноз</button>
+
+            <div id="chart" class="chart"></div>
+            <div id="current" style="margin-top: 20px;"></div>
+        </main>
+
+        <footer>
+            &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+        </footer>
+        
+    </body>
+</html>

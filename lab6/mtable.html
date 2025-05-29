@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Филатова Виктория Михайловна. Лабораторная 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-16x16.png">
+    <link rel="icon" href="favicon-32x32.png">
+    <style>
+        h1{
+          color: rgb(114, 50, 139);
+          background-color: rgb(179, 169, 233);
+          border: 2px solid rgba(114, 50, 139, 0.3);
+          padding: 10px 20px;
+          border-radius: 100px;
+          box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+
+        }
+        #mtable div {
+            color: rgb(49, 23, 56);
+            padding: 10px 20px;
+            margin: 4px 0;
+            background-color: #e7afe9;
+            border-radius: 80px;
+            box-shadow: 0 10px 10px rgba(51, 4, 43, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+            
+        }
+
+        #mtable div:hover {
+            background-color: #80539b; 
+            transform: translateY(-10px);
+        }
+
+        
+    </style>
+    <script>
+
+        function showTable(){
+            const tbl = document.getElementById('mtable');
+            const errorDiv = document.getElementById('errorMsg');
+
+            const multiplyInput = document.getElementById('multiplier');
+            const startInput = document.getElementById('start');
+            const endInput = document.getElementById('end');
+
+            const multiplyBy = parseInt(multiplyInput.value);
+            const start = parseInt(startInput.value);
+            const end = parseInt(endInput.value);
+
+            if (multiplyInput.value.trim() === '' || startInput.value.trim() === '' || endInput.value.trim() === '') {
+                errorDiv.textContent = "Пожалуйста, заполните все поля.";
+                return;
+            }
+
+            if (isNaN(multiplyBy) || isNaN(start) || isNaN(end)) {
+                errorDiv.textContent = "Пожалуйста, введите корректные числа.";
+                return;
+            }
+
+            if (start > end) {
+                errorDiv.textContent = "Начальное значение не может быть больше конечного.";
+                return;
+            }
+
+            errorDiv.textContent = '';
+
+            tbl.innerHTML = '<h1>Таблица умножения</h1>';
+
+            for (let i = start; i <= end; i++) {
+                let s = `<div>${i}* ${multiplyBy} = ${i*multiplyBy}</div>`;
+                tbl.innerHTML += s;
+            }
+        }
+
+    </script>
+</head>
+<body onload = 'showMutipleTable()'>
+    <header>
+        НГТУ, ФБ, Лабораторная работа 5
+    </header>
+
+    <main>
+        <div id="mtable"></div>
+        <div class="controls">
+        Умножить на: <input type = 'number' id="multiplier" placeholder="Введите число"><br>
+        Начать с: <input type = 'number' id="start" placeholder="Введите число"><br>
+        Закончить на: <input type = 'number' id="end" placeholder="Введите число"><br>
+
+        <button onclick="showTable()">Таблица</button>
+
+        <div id="errorMsg" style="color: red; font-weight: bold; margin-top:10px;"></div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+    </footer>
+    
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Филатова Виктория Михайловна. Лабораторная 5</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-16x16.png">
+    <link rel="icon" href="favicon-32x32.png">
+    <style>
+        #block {
+            width: 300px;
+            height: 200px;
+            border: 3px solid #333;
+            background: #cf80c5;
+            color: black;
+            cursor: crosshair;
+            margin: 30px auto;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.5;
+            padding-top: 40px;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        function showCoords(event) {
+            let x = event.offsetX;
+            let y = event.offsetY;
+            let div = document.getElementById("block");
+            let info = "<b>x</b> = " + x + "px<br><b>y</b> = " + y + "px";
+            let pressed = [];
+
+            div.style.background = "#d0e9fa";
+            div.style.border = "3px solid #333";
+            div.style.color = "black";
+
+            if(event.ctrlKey) {
+                pressed.push("Нажата клавиша Ctrl");
+                div.style.color = "red";
+            }
+            if(event.altKey) {
+                pressed.push("Нажата клавиша Alt");
+                div.style.background = "#ffe4b5";
+            }
+            if(event.shiftKey) {
+                pressed.push("Нажата клавиша Shift");
+                div.style.border = "3px dashed #007bff";
+            }
+
+            if(pressed.length > 0) {
+                info += "<br><br>" + pressed.join("<br>");
+            }
+            div.innerHTML = info;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная работа 5
+    </header>
+
+    <main>
+        <div id="block" onmousemove="showCoords(event)"></div>
+    </main>
+
+    <footer>
+        &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>
+

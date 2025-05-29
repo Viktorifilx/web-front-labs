@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Филатова Виктория Михайловна. Лабораторная 5</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon-16x16.png">
+    <link rel="icon" href="favicon-32x32.png">
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  .help {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #eef;
+    border: 1px solid #99c;
+  }
+  .image-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 15px;
+  }
+  #displayedImage {
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+  }
+  #filterInfo {
+    margin-top: 10px;
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const img = document.getElementById('displayedImage');
+    const filterName = document.getElementById('filterName');
+    const filterLevel = document.getElementById('filterLevel');
+
+    const maxMaxEffect = 20; 
+    const maxEffect = 100; 
+
+    let currentFilter = '';
+    let currentValue = 0;
+
+    let ctrlPressed = false;
+    let altPressed = false;
+    let shiftPressed = false;
+
+    const filtersWithSliders = ['blur', 'grayscale', 'hue-rotate', 'sepia', 'invert', 'brightness', 'contrast', 'saturate'];
+
+    const specialFilters = {
+      "Control": "blur",
+      "Alt": "grayscale",
+      "Shift": "hue-rotate"
+    };
+
+    img.addEventListener('mousemove', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const x = e.clientX - rect.left; 
+      const width = rect.width;
+      const positionRatio = Math.min(Math.max(x / width, 0), 1); // [0,1]
+      
+      currentFilter = '';
+      currentValue = 0;
+
+      if(ctrlPressed || altPressed || shiftPressed){
+        if(ctrlPressed) {
+          currentFilter = 'blur';
+        } else if(altPressed) {
+          currentFilter = 'grayscale';
+        } else if(shiftPressed) {
+          currentFilter = 'hue-rotate';
+        }
+        currentValue = Math.round(positionRatio * maxEffect);
+        let filterStr = '';
+        if(currentFilter == 'blur'){
+          filterStr = `blur(${currentValue}px)`;
+        }else if(currentFilter == 'grayscale'){
+          filterStr = ` grayscale(${currentValue}%)`;
+        }else if(currentFilter == 'hue-rotate'){
+          filterStr = ` hue-rotate(${currentValue * 3.6}deg)`; 
+        }
+        img.style.filter = filterStr;
+        filterName.innerText = currentFilter;
+        filterLevel.innerText = (currentFilter == 'hue-rotate') ? `${currentValue * 3.6}°` : `${currentValue}${currentFilter=='blur'?'px':'%'}`
+      }else{
+        const effectStrength = positionRatio * maxMaxEffect; 
+        img.style.filter = `blur(${effectStrength}px)`;
+        filterName.innerText = 'blur';
+        filterLevel.innerText = `${effectStrength.toFixed(1)}px`;
+      }
+    });
+
+    img.addEventListener('mouseleave', () => {
+      img.style.filter = '';
+      filterName.innerText = 'Нет фильтра';
+      filterLevel.innerText = '';
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Control') ctrlPressed = true;
+      if(e.key === 'Alt') altPressed = true;
+      if(e.key === 'Shift') shiftPressed = true;
+    });
+    document.addEventListener('keyup', (e) => {
+      if(e.key === 'Control') ctrlPressed = false;
+      if(e.key === 'Alt') altPressed = false;
+      if(e.key === 'Shift') shiftPressed = false;
+    });
+
+  });
+</script>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная работа 5
+    </header>
+
+<div class="help">
+<h3>Инструкция</h3>
+<p>Наведите мышку на изображение. Двигайте мышь слева направо - эффект будет усиливаться. 
+При нажатых клавишах Ctrl, Alt или Shift, активируются дополнительные фильтры. 
+Фильтры и их степень отображаются ниже изображения.</p>
+</div>
+<div class="image-container">
+    <img id="displayedImage" src="tangled-M8OR-1024x576-MM-80.webp" alt="Картина" />
+</div>
+<div id="filterInfo">
+  Текущий фильтр: <span id="filterName">Нет фильтра</span><br />
+  Степень фильтра: <span id="filterLevel"></span>
+</div>
+
+<footer>
+    &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+</footer>
+
+</body>
+</html>

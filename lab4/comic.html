@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Филатова Виктория Михайловна. Лабораторная 4</title>
+    <link rel="stylesheet" href="../main.css">
+    <style>
+        .comic {
+            position: relative;
+            width: 700px;
+            margin: 20px auto;
+        }
+        .comic img {
+            width: 100%;
+            display: block;
+        }
+        .cloud {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid black;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            font-size: 16px;
+            padding: 7px 10px;
+            text-align: center;
+            color: black;
+            pointer-events: none; /* облако не мешает наведению */
+        }
+        .cloud1 {
+            left: 220px;
+            top: 70px;
+            width: 40px;
+            height: 40px;
+        }
+        .cloud2 {
+            left: 260px;
+            top: 40px;
+            width: 55px;
+            height: 45px;
+        }
+        .cloud3 {
+            left: 305px;
+            top: 15px;
+            width: 70px;
+            height: 55px;
+        }
+        .cloud4 {
+            left: 380px;
+            top: 50px;
+            width: 170px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .comic:hover .cloud {
+            opacity: 1;
+        }
+        .comic:hover .cloud1 { transition-delay: 0.2s; }
+        .comic:hover .cloud2 { transition-delay: 0.4s; }
+        .comic:hover .cloud3 { transition-delay: 0.6s; }
+        .comic:hover .cloud4 { transition-delay: 0.8s; }
+        .comic:not(:hover) .cloud { transition-delay: 0s; }
+    </style>
+</head>
+<body>
+    <header>
+        НГТУ, ФБ, Лабораторная работа 4
+    </header>
+    <main>
+        <div class="comic">
+            <img src="https://interny.ucoz.net/_ld/20/92011331.jpg" alt="person">
+            <div class="cloud cloud1"></div>
+            <div class="cloud cloud2"></div>
+            <div class="cloud cloud3"></div>
+            <div class="cloud cloud4">Прекратите смеяться!</div>
+        </div>
+    </main>
+    <footer>
+        &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+    </footer>
+</body>
+</html>

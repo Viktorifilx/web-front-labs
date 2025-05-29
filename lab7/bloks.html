@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Филатова Виктория Михайловна. Лабораторные работы по WEB
+            программированию</title>
+        <link rel="stylesheet" href="../main.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon-16x16.png">
+        <link rel="icon" href="favicon-32x32.png">
+        <script>
+            function addNewBlock() {
+                let NewBlock = document.createElement('div')
+                NewBlock.style.backgroundColor = '#8A2BE2';
+                NewBlock.style.height = '40px';
+                NewBlock.style.width = '80%';
+                NewBlock.style.margin = '10px auto';
+                NewBlock.style.border = '2px solid black';
+                NewBlock.style.textAlign = 'center';
+                NewBlock.style.lineHeight = '40px';
+
+
+                document.querySelector('main').appendChild(NewBlock);
+            }
+        </script>
+    </head>
+
+    <body>
+
+        <header>
+            НГТУ, ФБ, Лабораторная работа 7
+        </header>
+
+        <main>
+            <button onclick="addNewBlock()">Добавить блок</button>
+        </main>
+
+        <footer>
+            &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+        </footer>
+        
+    </body>
+</html>

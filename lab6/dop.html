@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Филатова Виктория Михайловна. Лабораторная 6</title>
+<link rel="stylesheet" href="../main.css" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" href="favicon-16x16.png" />
+<link rel="icon" href="favicon-32x32.png" />
+<style>
+   #diag {
+        display: flex;
+        align-items: flex-end;
+        height: 420px;
+        margin: 0 auto 22px auto;
+        background: #f7f9fd;
+        border: 2px solid #aee5fc;
+        border-radius: 10px;
+        padding: 20px 30px 10px 30px;
+        max-width: 1050px;
+        min-width: 600px;
+        overflow-x: auto;
+    }
+    .bar {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin: 0 8px;
+        width: 32px;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+    }
+    .min-segment {
+        background: #0057ff;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        position: relative;
+    }
+    .delta-segment {
+        background: #b2e8fc;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        position: relative;
+    }
+    .max-label, .min-label {
+        font-size: 11px;
+        color: #0057ff;
+        font-family: Arial, sans-serif;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        font-weight: normal;
+        margin: 0;
+        padding: 0;
+        text-shadow: 0 1px 2px #fff;
+    }
+    .max-label { top: -13px;}
+    .min-label { bottom: -15px;}
+</style>
+<script>
+const monthsData = [
+  {name: "Январь", minTemp: -15, maxTemp: -3},
+  {name: "Февраль", minTemp: -13, maxTemp: -1},
+  {name: "Март", minTemp: -7, maxTemp: 2},
+  {name: "Апрель", minTemp: 0, maxTemp: 10},
+  {name: "Май", minTemp: 6, maxTemp: 15},
+  {name: "Июнь", minTemp: 12, maxTemp: 20},
+  {name: "Июль", minTemp: 15, maxTemp: 23},
+  {name: "Август", minTemp: 14, maxTemp: 22},
+  {name: "Сентябрь", minTemp: 9, maxTemp: 17},
+  {name: "Октябрь", minTemp: 3, maxTemp: 10},
+  {name: "Ноябрь", minTemp: -3, maxTemp: 4},
+  {name: "Декабрь", minTemp: -12, maxTemp: -4}
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById('monthSelect');
+  monthsData.forEach((m, i) => {
+    const option = document.createElement('option');
+    option.value = i;
+    option.innerText = m.name;
+    select.appendChild(option);
+  });
+  
+  select.addEventListener('change', updateChart);
+  
+  updateChart();
+});
+
+function updateChart() {
+  const select = document.getElementById('monthSelect');
+  const index = +select.value;
+  const month = monthsData[index];
+  const maxTemp = Math.max(...monthsData.map(m => m.maxTemp));
+  const minTemp = Math.min(...monthsData.map(m => m.minTemp));
+  const tempRange = maxTemp - minTemp;
+
+  const diagram = document.getElementById('diag');
+  diagram.innerHTML = '';
+
+  for (let i = 0; i < monthsData.length; i++) {
+    const m = monthsData[i];
+    const scale = 400 / tempRange;
+
+    const minHeight = (m.minTemp - minTemp) * scale;
+    const deltaHeight = (m.maxTemp - m.minTemp) * scale;
+
+    const barDiv = document.createElement('div');
+    barDiv.className = 'bar';
+
+    const minDiv = document.createElement('div');
+    minDiv.className = 'min-segment';
+    minDiv.style.height = minHeight + 'px';
+
+    const deltaDiv = document.createElement('div');
+    deltaDiv.className = 'delta-segment';
+    deltaDiv.style.height = deltaHeight + 'px';
+
+    const maxLabel = document.createElement('div');
+    maxLabel.className = 'max-label';
+    maxLabel.innerText = m.maxTemp;
+
+    const minLabel = document.createElement('div');
+    minLabel.className = 'min-label';
+    minLabel.innerText = m.minTemp;
+
+    barDiv.appendChild(minDiv);
+    barDiv.appendChild(deltaDiv);
+    barDiv.appendChild(maxLabel);
+    barDiv.appendChild(minLabel);
+
+    if (i === index) {
+      barDiv.style.outline = '3px solid #f44336';
+      document.getElementById('monthNumber').innerText = `Месяц: ${i + 1} (${m.name})`;
+      document.getElementById('minTemp').innerText = `Мин. температура: ${m.minTemp} °C`;
+      document.getElementById('maxTemp').innerText = `Макс. температура: ${m.maxTemp} °C`;
+    } else {
+      barDiv.style.outline = 'none';
+    }
+
+    // Обработка клика по столбцу
+    barDiv.onclick = () => {
+      document.getElementById('monthSelect').value = i;
+      updateChart();
+    };
+
+    document.getElementById('diag').appendChild(barDiv);
+  }
+}
+</script>
+</head>
+<body>
+<header>
+    НГТУ, ФБ, Лабораторная работа 6
+</header>
+
+<main>
+    <h1>График температуры за год</h1>
+    <div id="controls">
+        <label for="monthSelect">Выберите месяц: </label>
+        <select id="monthSelect"></select>
+    </div>
+    <div id="diag"></div>
+    <div id="info" style="text-align:center; margin-top:20px; font-family:Arial,sans-serif; font-size:14px;">
+        <p id="monthNumber"></p>
+        <p id="minTemp"></p>
+        <p id="maxTemp"></p>
+    </div>
+</main>
+
+<footer>  
+    &copy; Филатова Виктория, ФБИ-34, 2 курс, 2025
+</footer>
+</body>
+</html>
