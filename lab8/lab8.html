@@ -32,13 +32,17 @@
                 <div>Телефон: {{ user.tel }}</div>
                 <hr>
 
-                <h2>Цветы</h2>
-                <ul class = 'list-group'>
-                    <li v-for="(flower, index) in flowers">
+        <div class="card" style="max-width: 400px;">
+            <div class="card-body">
+                <h2 class="card-title">Цветы</h2>
+                <ul style="padding-left: 20px; margin-bottom: 0;">
+                    <li v-for="(flower, id) in flowers">
                         {{ flower }} <button @click="edit(index, flower)">?</button>
                     </li>
                 </ul>
-                <hr>
+            </div>
+        </div>
+        <hr>
 
                 <h2>Цветы</h2>
                 <table class="table table-bordered table-hover table-sm table-info">
