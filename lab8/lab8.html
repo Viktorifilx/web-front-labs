@@ -70,7 +70,10 @@
                     edit(index, flower) {
                         const newName = prompt('Новое имя цветка:', flower);
                         if (newName !== null && newName.trim() !== '') {
-                            this.flowers[index] = newName;
+                            this.flowers[index] = 'сохранение...';
+                            setTimeout(() => {
+                                this.flowers[index] = newName;
+                            }, 3000);
                         }
                     }
                 }
