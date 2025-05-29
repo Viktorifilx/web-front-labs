@@ -55,12 +55,16 @@
                         </tr>
                     </thead>
                     <tr v-for="(flower, id) in flowers" :key="id">
-                        <td>
-                            {{ flower }}
-                        </td>
-                        <td>
-                            <button @click="edit(id, flower)" class = 'btn btn-primary'><i class='bi bi-pen'></i></button>
-                        </td>
+                    <td>
+                        <span v-if="flower.name === null">загружается...</span>
+                        <span v-else>{{ flower.name }}</span>
+                    </td>
+                    <td>
+                        <button @click="edit(id, flower)" class="btn btn-primary" v-if="flower.name !== null">
+                        <i class="bi bi-pencil"></i>
+                        </button>
+                        <div class="spinner-border text-primary" role="status" v-if="flower.name === null"></div>
+                    </td>
                     </tr>
                 </table>
                 <hr>
@@ -102,7 +106,13 @@
                             age: '18',
                             tel: '222-33-44'
                         },
-                        flowers: ['роза', 'тюльпан', 'маргаритка', 'георгин', 'одуванчик'],
+                        flowers: [
+                        { name: 'роза' },
+                        { name: 'тюльпан' },
+                        { name: 'маргаритка' },
+                        { name: 'георгин' },
+                        { name: 'одуванчик' }
+                        ],
                         a: 1,
                         b: 10,
                         result: '',
@@ -115,18 +125,18 @@
                     decCounter() {
                         this.counter--;
                     },
-                    edit(index, flower) {
-                        const newName = prompt('Новое имя цветка:', flower);
-                        if (newName !== null && newName.trim() !== '') {
-                            this.flowers[index] = 'сохранение...';
-                            setTimeout(() => {
-                                this.flowers[index] = newName;
-                            }, 3000);
-                        }
-                    },
-                    sum() {
-                        this.result = this.a + this.b;
+                    edit(index, oldName) {
+                    const newName = prompt('Новое имя цветка:', oldName.name);
+                    if (newName !== null && newName.trim() !== '') {
+                        this.flowers[index].name = null;
+                        setTimeout(() => {
+                        this.flowers[index].name = newName;
+                        }, 3000);
                     }
+                },
+                sum() {
+                    this.result = this.a + this.b;
+                }
                 }
             })
             .mount('#app');
